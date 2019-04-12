@@ -56,33 +56,20 @@ class ViewController: UIViewController {
     @IBAction func continueBtnPressed(_ sender: UIButton) {
         if continueBtn.backgroundColor == normColor {
             continueBtn.backgroundColor = clickedColor
-//            continueBtn.noShadowButton()
         }
         else if continueBtn.backgroundColor == clickedColor {
             continueBtn.backgroundColor = normColor
             continueBtn.shadowButton()
+            continueBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .highlighted)
+
         }    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//        myView.setGradientBackground(colorOne: .white, colorTwo: .blue)
-
+        view.makeCorner(withRadius: 12.0) // rounds view controller view corners -> shows up like Cash App
     }
 
-    // This sets color of button when you start typing
-    
-//            messageInputBar.sendButton
-//                .onEnabled { item in
-//                    UIView.animate(withDuration: 0.3, animations: {
-//                        item.imageView?.backgroundColor = ColorPresets.blueIconSelected
-//                    })
-//                }.onDisabled { item in
-//                    UIView.animate(withDuration: 0.3, animations: {
-//                        item.imageView?.backgroundColor = ColorPresets.iconColor
-//                    })
-//            }
 }
 
 extension UIView{
@@ -113,6 +100,13 @@ extension UIView{
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         
         layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    // used to round view controller view
+    func makeCorner(withRadius radius: CGFloat) {
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+        self.layer.isOpaque = false
     }
 }
 
