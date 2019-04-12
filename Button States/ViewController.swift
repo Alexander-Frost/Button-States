@@ -8,13 +8,111 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+struct UIViewExtensionConstants {
+    static let CornerRadiusForButton : CGFloat = 25
+    static let CornerRadiusForLabel : CGFloat = 20
+}
 
+class ViewController: UIViewController {
+    
+    var normColor: UIColor = UIColor(red: 250/255, green: 251/255, blue: 252/255, alpha: 1.0)
+    var clickedColor: UIColor = UIColor(red: 2/255, green: 122/255, blue: 254/255, alpha: 1.0)
+    
+    @IBOutlet weak var finishedBtn: UIButton! {
+        didSet{
+            finishedBtn.setGradientBackground(colorOne: .green, colorTwo: .blue)
+            finishedBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .normal)
+            finishedBtn.shadowButton()
+            finishedBtn.layer.masksToBounds = true
+
+        }
+    }
+    @IBOutlet weak var nextBtn: UIButton! {
+        didSet{
+            nextBtn.setGradientBackground(colorOne: .orange, colorTwo: .red)
+            nextBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .normal)
+            nextBtn.shadowButton()
+            nextBtn.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet weak var continueBtn: UIButton!{
+        didSet{
+            continueBtn.backgroundColor = normColor
+            continueBtn.setTitleColor(UIColor.blue, for: .selected)
+            continueBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .normal)
+            continueBtn.shadowButton()
+
+        }
+    }
+    @IBAction func finishedBtnPressed(_ sender: UIButton) {
+        finishedBtn.setGradientBackground(colorOne: .orange, colorTwo: .red)
+        finishedBtn.layer.masksToBounds = true
+    }
+    @IBAction func nextBtnPressed(_ sender: UIButton) {
+        nextBtn.setGradientBackground(colorOne: .orange, colorTwo: .red)
+
+    }
+    
+    @IBAction func continueBtnPressed(_ sender: UIButton) {
+        if continueBtn.backgroundColor == normColor {
+            continueBtn.backgroundColor = clickedColor
+//            continueBtn.noShadowButton()
+        }
+        else if continueBtn.backgroundColor == clickedColor {
+            continueBtn.backgroundColor = normColor
+            continueBtn.shadowButton()
+        }    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//        myView.setGradientBackground(colorOne: .white, colorTwo: .blue)
+
     }
 
+    // This sets color of button when you start typing
+    
+//            messageInputBar.sendButton
+//                .onEnabled { item in
+//                    UIView.animate(withDuration: 0.3, animations: {
+//                        item.imageView?.backgroundColor = ColorPresets.blueIconSelected
+//                    })
+//                }.onDisabled { item in
+//                    UIView.animate(withDuration: 0.3, animations: {
+//                        item.imageView?.backgroundColor = ColorPresets.iconColor
+//                    })
+//            }
+}
 
+extension UIView{
+    func shadowButton(){
+        self.layer.cornerRadius = UIViewExtensionConstants.CornerRadiusForButton
+        self.layer.masksToBounds = true
+        self.layer.shadowRadius = 5.0
+        self.layer.shadowColor = UIColor(red:0.37, green:0.37, blue:0.37, alpha:1).cgColor
+        self.layer.shadowOpacity = 0.34
+        self.layer.shadowOffset = CGSize(width: 2, height: 5)
+        self.layer.masksToBounds = false
+    }
+    
+    func noShadowButton(){
+        self.layer.shadowRadius = 0.0
+        self.layer.shadowColor = UIColor(red:0.37, green:0.37, blue:0.37, alpha:1).cgColor
+        self.layer.shadowOpacity = 0.0
+        self.layer.shadowOffset = CGSize(width: 2, height: 5)
+    }
+    
+    func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
 }
 
