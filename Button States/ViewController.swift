@@ -56,11 +56,13 @@ class ViewController: UIViewController {
     @IBAction func continueBtnPressed(_ sender: UIButton) {
         if continueBtn.backgroundColor == normColor {
             continueBtn.backgroundColor = clickedColor
+            continueBtn.setTitleColor(clickedColor, for: .normal)
         }
         else if continueBtn.backgroundColor == clickedColor {
             continueBtn.backgroundColor = normColor
             continueBtn.shadowButton()
-            continueBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .highlighted)
+            continueBtn.setTitleColor(UIColor(red: 230/255, green: 234/255, blue: 238/255, alpha: 1.0), for: .normal)
+
 
         }    }
     
